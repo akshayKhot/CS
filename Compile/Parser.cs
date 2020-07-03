@@ -53,6 +53,15 @@ namespace cc
             return new NumberExpressionSyntax(numberToken);
         }
 
+        private SyntaxToken Match(SyntaxKind kind)
+        {
+            if (Current.Kind == kind)
+                return NextToken();
+
+            // why do we do this?
+            return new SyntaxToken(kind, Current.Position, null, null);
+        }
+
         private SyntaxToken Peek(int offset)
         {
             int index = _position + offset;
@@ -68,15 +77,6 @@ namespace cc
             var current = Current;
             _position++;
             return current;
-        }
-
-        private SyntaxToken Match(SyntaxKind kind)
-        {
-            if (Current.Kind == kind)
-                return NextToken();
-
-            // why do we do this?
-            return new SyntaxToken(kind, Current.Position, null, null);
         }
     }
 }

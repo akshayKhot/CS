@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace cc
 {
     // 1 + 2 * 3
@@ -11,6 +13,8 @@ namespace cc
     abstract class SyntaxNode
     {
         public abstract SyntaxKind Kind { get; }
+
+        public abstract IEnumerable<SyntaxNode> GetChildren();
     }
 
     abstract class ExpressionSyntax : SyntaxNode
@@ -26,6 +30,11 @@ namespace cc
         public NumberExpressionSyntax(SyntaxToken numberToken)
         {
             NumberToken = numberToken;
+        }
+
+        public override IEnumerable<SyntaxNode> GetChildren()
+        {
+            yield return NumberToken;
         }
     }
 
@@ -44,6 +53,13 @@ namespace cc
             Left = left;
             OperatorToken = operatorToken;
             Right = right;
+        }
+
+        public override IEnumerable<SyntaxNode> GetChildren()
+        {
+            yield return Left;
+            yield return OperatorToken;
+            yield return Right;
         }
     }
 }
