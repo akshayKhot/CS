@@ -1,20 +1,41 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace CC
 {
-    class Parser
+    public class Parser
     {
+        #region Fields
+
         private int _position;
 
         private readonly SyntaxToken[] _tokens;
 
-        private SyntaxToken Current => Peek(0);
+        #endregion
+
+        public SyntaxToken Current => Peek(0);
+
+        public string ParseTree
+        {
+            get
+            {
+                var expression = Parse();
+
+                var builder = new StringBuilder();
+
+                BuildTree(expression, builder);
+
+                return builder.ToString();
+            }
+        }
 
         public Parser(string text)
         {
             var tokens = new List<SyntaxToken>();
             var lexer = new Lexer(text);
+            
             SyntaxToken token;
 
             do
@@ -45,6 +66,38 @@ namespace CC
             return left;
         }
 
+        /*
+        ├── include
+        │   ├── foo
+        │   └── bar
+        */
+        static void BuildTree(SyntaxNode node, StringBuilder builder, string indent = "", bool isLast = true)
+        {
+            string marker = isLast ? "└──" : "├──";
+            builder.Append(indent);
+            builder.Append(marker);
+            builder.Append(node.Kind);
+
+            if (node is SyntaxToken token && token.Value != null)
+            {
+                builder.Append(" ");
+                builder.Append(token.Value);
+            }
+
+            builder.AppendLine();
+
+            indent += isLast ? "    " : "│   ";
+
+            var lastChild = node.GetChildren().LastOrDefault();
+
+            foreach (SyntaxNode child in node.GetChildren())
+            {
+                BuildTree(child, builder, indent, child == lastChild);
+            }
+        }
+
+        #region Private Methods
+
         private ExpressionSyntax ParsePrimaryExpression()
         {
             SyntaxToken numberToken = Match(SyntaxKind.NumberToken);
@@ -61,7 +114,16 @@ namespace CC
             return new SyntaxToken(kind, Current.Position, null, null);
         }
 
-        private SyntaxToken Peek(int offset)
+        private SyntaxToken NextToken()
+        {
+            var current = Current;
+            _position++;
+            return current;
+        }
+
+        // Gets the token at the offset position 
+        // from the current position. 
+        public SyntaxToken Peek(int offset)
         {
             int index = _position + offset;
 
@@ -71,11 +133,6 @@ namespace CC
             return _tokens[index];
         }
 
-        private SyntaxToken NextToken()
-        {
-            var current = Current;
-            _position++;
-            return current;
-        }
+        #endregion
     }
 }
