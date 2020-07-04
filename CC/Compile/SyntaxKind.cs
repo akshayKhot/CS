@@ -1,4 +1,4 @@
-namespace cc
+namespace CC
 {
     enum SyntaxKind
     {

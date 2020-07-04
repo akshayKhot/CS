@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace cc
+namespace CC
 {
     class Program
     {

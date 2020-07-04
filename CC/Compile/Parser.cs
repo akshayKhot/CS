@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace cc
+namespace CC
 {
     class Parser
     {

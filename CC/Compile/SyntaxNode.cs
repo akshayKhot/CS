@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace cc
+namespace CC
 {
     // 1 + 2 * 3
     //
