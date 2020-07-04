@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Test.Resource;
 
 namespace Test
 {
@@ -13,42 +14,19 @@ namespace Test
         [TestMethod]
         public void ParseTest()
         {
-            var parsers = new Parser[]
+            var dict = new Dictionary<string, string>() 
             {
-                new Parser("1 + 2 - 3"),
-                new Parser("2 * 3"),
-                new Parser("1")
+                { "1 + 2 - 3", StringResource.First },
+                { "2 * 3", StringResource.Second },
+                { "1", StringResource.Third }
             };
 
-            var expectedTrees = new string[]
+            foreach (var item in dict)
             {
-@"└──BinaryExpression
-    ├──BinaryExpression
-    │   ├──NumberExpression
-    │   │   └──NumberToken 1
-    │   ├──PlusToken
-    │   └──NumberExpression
-    │       └──NumberToken 2
-    ├──MinusToken
-    └──NumberExpression
-        └──NumberToken 3
-",
-@"└──BinaryExpression
-    ├──NumberExpression
-    │   └──NumberToken 2
-    ├──StarToken
-    └──NumberExpression
-        └──NumberToken 3
-",
-@"└──NumberExpression
-    └──NumberToken 1
-"
-            };
+                var parser = new Parser(item.Key);
 
-            for (int i = 0; i < parsers.Length; i++)
-            {
-                string expected = expectedTrees[i];
-                string actual = parsers[i].ParseTree;
+                string expected = item.Value;
+                string actual = parser.ParseTree;
 
                 Assert.AreEqual(expected, actual);
             }
