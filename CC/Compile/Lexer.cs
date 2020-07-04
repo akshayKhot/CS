@@ -1,12 +1,12 @@
 namespace CC
 {
-    class Lexer
+    public class Lexer
     {
         private readonly string _text;
 
         private int _position;
 
-        private char Current
+        public char Current
         {
             get
             {
@@ -15,11 +15,6 @@ namespace CC
 
                 return _text[_position];
             }
-        }
-
-        private void Next()
-        {
-            _position++;
         }
 
         public Lexer(string text)
@@ -79,6 +74,11 @@ namespace CC
                 return new SyntaxToken(SyntaxKind.CloseParenthesisToken, _position++, ")", null);
 
             return new SyntaxToken(SyntaxKind.BadToken, _position++, _text.Substring(_position - 1, 1), null);
+        }
+
+        public void Next()
+        {
+            _position++;
         }
     }
 }

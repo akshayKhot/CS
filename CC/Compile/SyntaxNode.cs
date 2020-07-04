@@ -10,18 +10,18 @@ namespace CC
     //		  /   \
     //		2		3
     //
-    abstract class SyntaxNode
+    public abstract class SyntaxNode
     {
         public abstract SyntaxKind Kind { get; }
 
         public abstract IEnumerable<SyntaxNode> GetChildren();
     }
 
-    abstract class ExpressionSyntax : SyntaxNode
+    public abstract class ExpressionSyntax : SyntaxNode
     {
     }
 
-    sealed class NumberExpressionSyntax : ExpressionSyntax
+    public sealed class NumberExpressionSyntax : ExpressionSyntax
     {
         public SyntaxToken NumberToken { get; }
 
@@ -38,7 +38,7 @@ namespace CC
         }
     }
 
-    sealed class BinaryExpressionSyntax : ExpressionSyntax
+    public sealed class BinaryExpressionSyntax : ExpressionSyntax
     {
         public override SyntaxKind Kind => SyntaxKind.BinaryExpression;
 

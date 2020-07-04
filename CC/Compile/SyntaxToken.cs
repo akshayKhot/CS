@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace CC
 {
-    class SyntaxToken : SyntaxNode
+    public class SyntaxToken : SyntaxNode
     {
         public SyntaxToken(SyntaxKind kind, int position, string text, object value)
         {
@@ -40,6 +40,25 @@ namespace CC
                     Kind == SyntaxKind.MinusToken ||
                     Kind == SyntaxKind.StarToken ||
                     Kind == SyntaxKind.SlashToken;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is SyntaxToken token)
+            {
+                bool areEqual = Kind == token.Kind &&
+                        Position == token.Position &&
+                        Text == token.Text;
+
+                return areEqual;
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

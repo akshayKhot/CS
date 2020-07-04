@@ -1,6 +1,6 @@
 namespace CC
 {
-    enum SyntaxKind
+    public enum SyntaxKind
     {
         NumberToken,
         WhitespaceToken,
