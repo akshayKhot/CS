@@ -14,21 +14,16 @@ namespace Test
         [TestMethod]
         public void ParseTest()
         {
-            var dict = new Dictionary<string, string>() 
+            Dictionary<string, string> expressionTreeMap = StringResource.GetExpressionTreeMap();
+
+            foreach (var expressionTree in expressionTreeMap)
             {
-                { "1 + 2 - 3", StringResource.First },
-                { "2 * 3", StringResource.Second },
-                { "1", StringResource.Third }
-            };
+                var parser = new Parser(expressionTree.Key);
 
-            foreach (var item in dict)
-            {
-                var parser = new Parser(item.Key);
+                string expectedTree = expressionTree.Value;
+                string actualTree = parser.ParseTree;
 
-                string expected = item.Value;
-                string actual = parser.ParseTree;
-
-                Assert.AreEqual(expected, actual);
+                Assert.AreEqual(expectedTree, actualTree);
             }
         }
 

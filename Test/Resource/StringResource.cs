@@ -6,7 +6,7 @@ namespace Test.Resource
 {
     public static class StringResource
     {
-        public static string First =>
+        public static string FirstTree =>
 @"└──BinaryExpression
     ├──BinaryExpression
     │   ├──NumberExpression
@@ -19,7 +19,7 @@ namespace Test.Resource
         └──NumberToken 3
 ";
 
-        public static string Second =>
+        public static string SecondTree =>
 @"└──BinaryExpression
     ├──NumberExpression
     │   └──NumberToken 2
@@ -28,9 +28,21 @@ namespace Test.Resource
         └──NumberToken 3
 ";
 
-        public static string Third =>
+        public static string ThirdTree =>
 @"└──NumberExpression
     └──NumberToken 1
 ";
+
+        public static Dictionary<string, string> GetExpressionTreeMap()
+        {
+            var expressionTree = new Dictionary<string, string>()
+            {
+                { "1 + 2 - 3", FirstTree },
+                { "2 * 3", SecondTree },
+                { "1", ThirdTree }
+            };
+
+            return expressionTree; 
+        }
     }
 }
