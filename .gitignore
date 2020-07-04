@@ -34,3 +34,6 @@ msbuild.err
 msbuild.wrn
 .vs/cc/DesignTimeBuild/.dtbcache.v2
 .vs/
+Test/[Bb]in/
+Test/[Oo]bj/
+Test/[Oo]ut/

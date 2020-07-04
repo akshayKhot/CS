@@ -5,14 +5,9 @@ namespace Test
     [TestClass]
     public class LexerTest
     {
-        [TestClass]
-        public class ParserTest
+        [TestMethod]
+        public void TestMethod1()
         {
-            [TestMethod]
-            public void MyTest()
-            {
-                Assert.AreEqual(3, 3);
-            }
         }
     }
 }
