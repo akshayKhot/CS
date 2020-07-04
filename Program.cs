@@ -17,22 +17,30 @@ namespace cc
                     return;
 
                 var parser = new Parser(line);
+
                 ExpressionSyntax expression = parser.Parse();
 
-                var color = Console.ForegroundColor;
-                Console.ForegroundColor = ConsoleColor.Green;
-                PrettyPrint(expression);
-                Console.ForegroundColor = color;
+                Print(expression);
             }
         }
 
+        private static void Print(ExpressionSyntax expression)
+        {
+            var color = Console.ForegroundColor;
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            PrettyPrint(expression);
+
+            Console.ForegroundColor = color;
+        }
+
+        /*
+        ├── include
+        │   ├── foo
+        │   └── bar
+        */
         static void PrettyPrint(SyntaxNode node, string indent = "", bool isLast = true)
         {
-            /*
-			├── include
-			│   ├── foo
-			│   └── bar
-			*/
             string marker = isLast ? "└──" : "├──";
             Console.Write(indent);
             Console.Write(marker);

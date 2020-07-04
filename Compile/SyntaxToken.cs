@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,10 +22,24 @@ namespace cc
 
         public object Value { get; }
 
+        internal bool IsValid()
+        {
+            return Kind != SyntaxKind.WhitespaceToken &&
+                    Kind != SyntaxKind.BadToken;
+        }
+
         // As tokens are leaf nodes, they don't have any children
         public override IEnumerable<SyntaxNode> GetChildren()
         {
             return Enumerable.Empty<SyntaxNode>();
+        }
+
+        public bool IsArithmetic()
+        {
+            return Kind == SyntaxKind.PlusToken ||
+                    Kind == SyntaxKind.MinusToken ||
+                    Kind == SyntaxKind.StarToken ||
+                    Kind == SyntaxKind.SlashToken;
         }
     }
 }

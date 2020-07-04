@@ -21,8 +21,7 @@ namespace cc
             {
                 token = lexer.NextToken();
 
-                if (token.Kind != SyntaxKind.WhitespaceToken &&
-                    token.Kind != SyntaxKind.BadToken)
+                if (token.IsValid())
                 {
                     tokens.Add(token);
                 }
@@ -36,7 +35,7 @@ namespace cc
         {
             ExpressionSyntax left = ParsePrimaryExpression();
 
-            while (Current.Kind == SyntaxKind.PlusToken || Current.Kind == SyntaxKind.MinusToken)
+            while (Current.IsArithmetic())
             {
                 SyntaxToken operatorToken = NextToken();
                 ExpressionSyntax right = ParsePrimaryExpression();
