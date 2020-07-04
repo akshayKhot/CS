@@ -7,9 +7,9 @@ namespace cc
     {
         static void Main(string[] args)
         {
-            while (true)
+            while (true) 
             {
-                Console.Write("> ");
+                Console.Write("> "); 
 
                 var line = Console.ReadLine();
 
