@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CC
 {
@@ -18,6 +21,8 @@ namespace CC
                 var parser = new Parser(line);
                 
                 Print(parser.ParseTree);
+
+                PrintErrorsIfAny(parser.Diagnostics);
             }
         }
 
@@ -30,6 +35,21 @@ namespace CC
             Console.WriteLine(tree);
 
             Console.ForegroundColor = color;
+        }
+
+        private static void PrintErrorsIfAny(IEnumerable<string> errors)
+        {
+            if (errors.Any())
+            {
+                var color = Console.ForegroundColor;
+
+                Console.ForegroundColor = ConsoleColor.Red;
+
+                foreach (string error in errors)
+                    Console.WriteLine(error);
+
+                Console.ForegroundColor = color; 
+            }
         }
     }
 }

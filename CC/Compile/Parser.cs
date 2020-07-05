@@ -13,9 +13,13 @@ namespace CC
 
         private readonly SyntaxToken[] _tokens;
 
+        private List<string> _diagnostics = new List<string>();
+
         #endregion
 
         public SyntaxToken Current => Peek(0);
+
+        public IEnumerable<string> Diagnostics => _diagnostics;
 
         public string ParseTree
         {
@@ -50,6 +54,9 @@ namespace CC
             } while (token.Kind != SyntaxKind.EndOfFileToken);
 
             _tokens = tokens.ToArray();
+
+            // Don't forget what the lexer recorded.
+            _diagnostics.AddRange(lexer.Diagnostics);
         }
 
         public ExpressionSyntax Parse()
@@ -66,12 +73,46 @@ namespace CC
             return left;
         }
 
-        /*
-        ├── include
-        │   ├── foo
-        │   └── bar
-        */
-        static void BuildTree(SyntaxNode node, StringBuilder builder, string indent = "", bool isLast = true)
+        // Gets the token at the offset position 
+        // from the current position. 
+        public SyntaxToken Peek(int offset)
+        {
+            int index = _position + offset;
+
+            if (index >= _tokens.Length)
+                return _tokens[_tokens.Length - 1]; // return last token
+
+            return _tokens[index];
+        }
+
+        #region Private Methods
+
+        private ExpressionSyntax ParsePrimaryExpression()
+        {
+            SyntaxToken numberToken = Match(SyntaxKind.NumberToken);
+
+            return new NumberExpressionSyntax(numberToken);
+        }
+
+        private SyntaxToken Match(SyntaxKind kind)
+        {
+            if (Current.Kind == kind)
+                return NextToken();
+
+            _diagnostics.Add($"ERROR(Parse): Unexpected token <{Current.Kind}>, expected <{kind}>");
+
+            // why do we do this?
+            return new SyntaxToken(kind, Current.Position, null, null);
+        }
+
+        private SyntaxToken NextToken()
+        {
+            var current = Current;
+            _position++;
+            return current;
+        }
+
+        private static void BuildTree(SyntaxNode node, StringBuilder builder, string indent = "", bool isLast = true)
         {
             string marker = isLast ? "└──" : "├──";
             builder.Append(indent);
@@ -95,44 +136,7 @@ namespace CC
                 BuildTree(child, builder, indent, child == lastChild);
             }
         }
-
-        #region Private Methods
-
-        private ExpressionSyntax ParsePrimaryExpression()
-        {
-            SyntaxToken numberToken = Match(SyntaxKind.NumberToken);
-
-            return new NumberExpressionSyntax(numberToken);
-        }
-
-        private SyntaxToken Match(SyntaxKind kind)
-        {
-            if (Current.Kind == kind)
-                return NextToken();
-
-            // why do we do this?
-            return new SyntaxToken(kind, Current.Position, null, null);
-        }
-
-        private SyntaxToken NextToken()
-        {
-            var current = Current;
-            _position++;
-            return current;
-        }
-
-        // Gets the token at the offset position 
-        // from the current position. 
-        public SyntaxToken Peek(int offset)
-        {
-            int index = _position + offset;
-
-            if (index >= _tokens.Length)
-                return _tokens[_tokens.Length - 1]; // return last token
-
-            return _tokens[index];
-        }
-
+        
         #endregion
     }
 }

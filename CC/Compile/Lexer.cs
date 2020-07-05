@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace CC
 {
     public class Lexer
@@ -5,6 +7,10 @@ namespace CC
         private readonly string _text;
 
         private int _position;
+
+        private List<string> _diagnostics = new List<string>();
+
+        public IEnumerable<string> Diagnostics => _diagnostics; 
 
         public char Current
         {
@@ -72,6 +78,8 @@ namespace CC
 
             if (Current == ')')
                 return new SyntaxToken(SyntaxKind.CloseParenthesisToken, _position++, ")", null);
+
+            _diagnostics.Add($"ERROR(LEX): bad character input: '{Current}'");
 
             return new SyntaxToken(SyntaxKind.BadToken, _position++, _text.Substring(_position - 1, 1), null);
         }

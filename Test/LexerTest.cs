@@ -1,5 +1,6 @@
 using CC;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace Test
 {
@@ -55,6 +56,7 @@ namespace Test
         public void NextTokenTest()
         {
             string line = "1 + 2 - 3";
+            
             var lexer = new Lexer(line);
 
             var expectedTokens = new SyntaxToken[]
@@ -75,6 +77,19 @@ namespace Test
                 SyntaxToken actualToken = lexer.NextToken();
                 Assert.AreEqual(expectedToken, actualToken);
             }
+        }
+
+        [TestMethod]
+        public void ErrorTest()
+        {
+            string line = "H";
+
+            var lexer = new Lexer(line);
+
+            var token = lexer.NextToken();
+
+            Assert.AreEqual(1, lexer.Diagnostics.Count());
+            Assert.AreEqual("ERROR: bad character input: H", lexer.Diagnostics.First());
         }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Test.Resource;
 
@@ -60,6 +61,18 @@ namespace Test
 
                 Assert.AreEqual(expected, actual);
             }
+        }
+
+        [TestMethod]
+        public void ErrorTest()
+        {
+            var line = "H";
+
+            var parser = new Parser(line);
+
+            var expression = parser.Parse();
+
+            Assert.AreEqual("ERROR: Unexpected token <EndOfFileToken>, expected <NumberToken>", parser.Diagnostics.ToList()[1]);
         }
     }
 }
