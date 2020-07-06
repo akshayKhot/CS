@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace CC
@@ -14,6 +15,8 @@ namespace CC
                 Console.Write("> ");
 
                 var line = Console.ReadLine();
+               
+                var watch = Stopwatch.StartNew();
 
                 if (string.IsNullOrWhiteSpace(line) || line == "clear")
                     return;
@@ -23,6 +26,10 @@ namespace CC
                 Print(parser.ParseTree);
 
                 PrintErrorsIfAny(parser.Diagnostics);
+
+                watch.Stop();
+
+                PrintTime(watch);
             }
         }
 
@@ -50,6 +57,17 @@ namespace CC
 
                 Console.ForegroundColor = color; 
             }
+        }
+
+        private static void PrintTime(Stopwatch watch)
+        {
+            var color = Console.ForegroundColor;
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+
+            Console.WriteLine($"{watch.ElapsedMilliseconds} ms\n");
+
+            Console.ForegroundColor = color;
         }
     }
 }
