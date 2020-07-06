@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BenchmarkDotNet.Running;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,14 +16,14 @@ namespace CC
                 Console.Write("> ");
 
                 var line = Console.ReadLine();
-               
+
                 var watch = Stopwatch.StartNew();
 
                 if (string.IsNullOrWhiteSpace(line) || line == "clear")
                     return;
 
                 var parser = new Parser(line);
-                
+
                 Print(parser.ParseTree);
 
                 PrintErrorsIfAny(parser.Diagnostics);
