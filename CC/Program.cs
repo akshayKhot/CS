@@ -17,6 +17,8 @@ namespace CC
 
                 var line = Console.ReadLine();
 
+                Console.WriteLine();
+
                 var watch = Stopwatch.StartNew();
 
                 if (string.IsNullOrWhiteSpace(line) || line == "clear")
