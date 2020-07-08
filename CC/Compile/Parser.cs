@@ -21,20 +21,6 @@ namespace CC
 
         public IEnumerable<string> Diagnostics => _diagnostics;
 
-        public string ParseTree
-        {
-            get
-            {
-                var expression = Parse();
-
-                var builder = new StringBuilder();
-
-                BuildTree(expression, builder);
-
-                return builder.ToString();
-            }
-        }
-
         public Parser(string text)
         {
             var tokens = new List<SyntaxToken>();
@@ -59,7 +45,18 @@ namespace CC
             _diagnostics.AddRange(lexer.Diagnostics);
         }
 
-        public ExpressionSyntax Parse()
+        public SyntaxTree Parse()
+        {
+            ExpressionSyntax expression =  ParseExpression();
+
+            var endOfFileToken = Match(SyntaxKind.EndOfFileToken);
+
+            var tree = new SyntaxTree(_diagnostics, expression, endOfFileToken);
+
+            return tree;
+        }
+
+        private ExpressionSyntax ParseExpression()
         {
             ExpressionSyntax left = ParsePrimaryExpression();
 
@@ -112,30 +109,6 @@ namespace CC
             return current;
         }
 
-        private static void BuildTree(SyntaxNode node, StringBuilder builder, string indent = "", bool isLast = true)
-        {
-            string marker = isLast ? "└──" : "├──";
-            builder.Append(indent);
-            builder.Append(marker);
-            builder.Append(node.Kind);
-
-            if (node is SyntaxToken token && token.Value != null)
-            {
-                builder.Append(" ");
-                builder.Append(token.Value);
-            }
-
-            builder.AppendLine();
-
-            indent += isLast ? "    " : "│   ";
-
-            var lastChild = node.GetChildren().LastOrDefault();
-
-            foreach (SyntaxNode child in node.GetChildren())
-            {
-                BuildTree(child, builder, indent, child == lastChild);
-            }
-        }
         
         #endregion
     }

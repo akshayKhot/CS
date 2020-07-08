@@ -89,7 +89,7 @@ namespace Test
             var token = lexer.NextToken();
 
             Assert.AreEqual(1, lexer.Diagnostics.Count());
-            Assert.AreEqual("ERROR: bad character input: H", lexer.Diagnostics.First());
+            Assert.AreEqual("ERROR(LEX): bad character input: 'H'", lexer.Diagnostics.First());
         }
     }
 }

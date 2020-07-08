@@ -19,32 +19,32 @@ namespace CC
 
                 Console.WriteLine();
 
-                var watch = Stopwatch.StartNew();
+                var clock = Stopwatch.StartNew();
 
                 if (string.IsNullOrWhiteSpace(line) || line == "clear")
                     return;
 
                 var parser = new Parser(line);
 
-                Print(parser.ParseTree);
+                var syntaxTree = parser.Parse();
 
-                PrintErrorsIfAny(parser.Diagnostics);
+                Print(syntaxTree);
 
-                watch.Stop();
-
-                PrintTime(watch);
+                Print(clock);
             }
         }
 
-        private static void Print(string tree)
+        private static void Print(SyntaxTree syntaxTree)
         {
             var color = Console.ForegroundColor;
 
             Console.ForegroundColor = ConsoleColor.Green;
 
-            Console.WriteLine(tree);
+            Console.WriteLine(syntaxTree);
 
             Console.ForegroundColor = color;
+
+            PrintErrorsIfAny(syntaxTree.Diagnostics);
         }
 
         private static void PrintErrorsIfAny(IEnumerable<string> errors)
@@ -62,8 +62,10 @@ namespace CC
             }
         }
 
-        private static void PrintTime(Stopwatch watch)
+        private static void Print(Stopwatch watch)
         {
+            watch.Stop();
+
             var color = Console.ForegroundColor;
 
             Console.ForegroundColor = ConsoleColor.Yellow;

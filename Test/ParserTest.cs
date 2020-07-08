@@ -22,9 +22,10 @@ namespace Test
                 var parser = new Parser(expressionTree.Key);
 
                 string expectedTree = expressionTree.Value;
-                string actualTree = parser.ParseTree;
+                
+                SyntaxTree actualTree = parser.Parse();
 
-                Assert.AreEqual(expectedTree, actualTree);
+                Assert.AreEqual(expectedTree, actualTree.ToString());
             }
         }
 
@@ -72,7 +73,7 @@ namespace Test
 
             var expression = parser.Parse();
 
-            Assert.AreEqual("ERROR: Unexpected token <EndOfFileToken>, expected <NumberToken>", parser.Diagnostics.ToList()[1]);
+            Assert.AreEqual("ERROR(Parse): Unexpected token <EndOfFileToken>, expected <NumberToken>", parser.Diagnostics.ToList()[1]);
         }
     }
 }
