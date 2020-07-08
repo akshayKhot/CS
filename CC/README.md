@@ -6,17 +6,18 @@ Not much, yet. It parses the expression into a syntax tree and dumps the tree, a
 
 For example, 
 
-> 3 + 5 + 8
 
-└──BinaryExpression
-    ├──BinaryExpression
-    │   ├──NumberExpression
-    │   │   └──NumberToken 3
-    │   ├──PlusToken
-    │   └──NumberExpression
-    │       └──NumberToken 5
-    ├──PlusToken
-    └──NumberExpression
-        └──NumberToken 8
+    > 3 + 5 + 8
 
-16 (1 ms)
+    └──BinaryExpression
+        ├──BinaryExpression
+        │   ├──NumberExpression
+        │   │   └──NumberToken 3
+        │   ├──PlusToken
+        │   └──NumberExpression
+        │       └──NumberToken 5
+        ├──PlusToken
+        └──NumberExpression
+            └──NumberToken 8
+
+    16 (1 ms)
