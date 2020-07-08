@@ -21,3 +21,7 @@ For example,
             └──NumberToken 8
 
     16 (1 ms)
+
+### What will it do when it grows up?
+
+Write small scripts, execute and evaluate expressions. Support functions, especially first-class functions that you can pass around. 
