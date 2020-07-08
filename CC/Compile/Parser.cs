@@ -49,7 +49,7 @@ namespace CC
         {
             ExpressionSyntax expression =  ParseExpression();
 
-            var endOfFileToken = Match(SyntaxKind.EndOfFileToken);
+            SyntaxToken endOfFileToken = Match(SyntaxKind.EndOfFileToken);
 
             var tree = new SyntaxTree(_diagnostics, expression, endOfFileToken);
 

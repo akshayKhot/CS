@@ -45,7 +45,13 @@ namespace CC
 
                 int length = _position - start;
                 string text = _text.Substring(start, length);
-                int.TryParse(text, out int value);
+
+                if (!int.TryParse(text, out int value))
+                {
+                    // really large number, doesn't fit into int
+                    _diagnostics.Add($"ERROR(LEX): The number {_text} not a valid integer.");
+                }
+
                 return new SyntaxToken(SyntaxKind.NumberToken, start, text, value);
             }
 

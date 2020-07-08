@@ -42,24 +42,32 @@ namespace CC
 
             Console.WriteLine(syntaxTree);
 
-            Console.ForegroundColor = color;
+            if (!syntaxTree.Diagnostics.Any())
+            {
+                var evaluator = new Evaluator(syntaxTree.Root);
 
-            PrintErrorsIfAny(syntaxTree.Diagnostics);
+                int value = evaluator.Evaluate();
+
+                Console.Write(value);
+            }
+            else
+            {
+                PrintDiagnostics(syntaxTree.Diagnostics);
+            }
+
+            Console.ForegroundColor = color;
         }
 
-        private static void PrintErrorsIfAny(IEnumerable<string> errors)
+        private static void PrintDiagnostics(IEnumerable<string> errors)
         {
-            if (errors.Any())
-            {
-                var color = Console.ForegroundColor;
+            var color = Console.ForegroundColor;
 
-                Console.ForegroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.Red;
 
-                foreach (string error in errors)
-                    Console.WriteLine(error);
+            foreach (string error in errors)
+                Console.WriteLine(error);
 
-                Console.ForegroundColor = color; 
-            }
+            Console.ForegroundColor = color;
         }
 
         private static void Print(Stopwatch watch)
@@ -68,9 +76,9 @@ namespace CC
 
             var color = Console.ForegroundColor;
 
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.ForegroundColor = ConsoleColor.Gray;
 
-            Console.WriteLine($"{watch.ElapsedMilliseconds} ms\n");
+            Console.WriteLine($" ({watch.ElapsedMilliseconds} ms)\n");
 
             Console.ForegroundColor = color;
         }
