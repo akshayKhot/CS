@@ -47,7 +47,7 @@ namespace CC
 
         public SyntaxTree Parse()
         {
-            ExpressionSyntax expression =  ParseExpression();
+            ExpressionSyntax expression =  ParseTerm();
 
             SyntaxToken endOfFileToken = Match(SyntaxKind.EndOfFileToken);
 
@@ -56,11 +56,25 @@ namespace CC
             return tree;
         }
 
-        private ExpressionSyntax ParseExpression()
+        private ExpressionSyntax ParseTerm()
+        {
+            ExpressionSyntax left = ParseFactor();
+
+            while (Current.IsPlusMinus())
+            {
+                SyntaxToken operatorToken = NextToken();
+                ExpressionSyntax right = ParseFactor();
+                left = new BinaryExpressionSyntax(left, operatorToken, right);
+            }
+
+            return left;
+        }
+
+        private ExpressionSyntax ParseFactor()
         {
             ExpressionSyntax left = ParsePrimaryExpression();
 
-            while (Current.IsArithmetic())
+            while (Current.IsFactor())
             {
                 SyntaxToken operatorToken = NextToken();
                 ExpressionSyntax right = ParsePrimaryExpression();

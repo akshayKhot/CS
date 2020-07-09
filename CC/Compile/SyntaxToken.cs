@@ -34,11 +34,15 @@ namespace CC
             return Enumerable.Empty<SyntaxNode>();
         }
 
-        public bool IsArithmetic()
+        public bool IsPlusMinus()
         {
             return Kind == SyntaxKind.PlusToken ||
-                    Kind == SyntaxKind.MinusToken ||
-                    Kind == SyntaxKind.StarToken ||
+                    Kind == SyntaxKind.MinusToken;
+        }
+
+        public bool IsFactor()
+        {
+            return Kind == SyntaxKind.StarToken ||
                     Kind == SyntaxKind.SlashToken;
         }
 
