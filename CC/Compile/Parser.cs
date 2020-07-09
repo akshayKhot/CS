@@ -56,18 +56,21 @@ namespace CC
             return tree;
         }
 
+        // A term is just a bunch of factors that are strung together by '+' or '-'
         private ExpressionSyntax ParseTerm()
         {
-            ExpressionSyntax left = ParseFactor();
+            ExpressionSyntax leftFactor = ParseFactor();
 
             while (Current.IsPlusMinus())
             {
                 SyntaxToken operatorToken = NextToken();
-                ExpressionSyntax right = ParseFactor();
-                left = new BinaryExpressionSyntax(left, operatorToken, right);
+             
+                ExpressionSyntax rightFactor = ParseFactor();
+                
+                leftFactor = new BinaryExpressionSyntax(leftFactor, operatorToken, rightFactor);
             }
 
-            return left;
+            return leftFactor;
         }
 
         private ExpressionSyntax ParseFactor()
@@ -77,7 +80,9 @@ namespace CC
             while (Current.IsFactor())
             {
                 SyntaxToken operatorToken = NextToken();
+                
                 ExpressionSyntax right = ParsePrimaryExpression();
+                
                 left = new BinaryExpressionSyntax(left, operatorToken, right);
             }
 

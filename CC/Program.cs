@@ -19,18 +19,25 @@ namespace CC
 
                 Console.WriteLine();
 
-                var clock = Stopwatch.StartNew();
-
-                if (string.IsNullOrWhiteSpace(line) || line == "clear")
+                if (string.IsNullOrWhiteSpace(line))
                     return;
 
-                var parser = new Parser(line);
+                if (line == "clear")
+                {
+                    Console.Clear();
+                }
+                else
+                {
+                    var clock = Stopwatch.StartNew();
+                    
+                    var parser = new Parser(line);
 
-                var syntaxTree = parser.Parse();
+                    var syntaxTree = parser.Parse();
 
-                Print(syntaxTree);
+                    Print(syntaxTree);
 
-                Print(clock);
+                    Print(clock);
+                }
             }
         }
 
