@@ -22,22 +22,27 @@ namespace CC
                 if (string.IsNullOrWhiteSpace(line))
                     return;
 
-                if (line == "clear")
-                {
-                    Console.Clear();
-                }
-                else
-                {
-                    var clock = Stopwatch.StartNew();
-                    
-                    var parser = new Parser(line);
+                Compile(line);
+            }
+        }
 
-                    var syntaxTree = parser.Parse();
+        private static void Compile(string line)
+        {
+            if (line == "clear")
+            {
+                Console.Clear();
+            }
+            else
+            {
+                var clock = Stopwatch.StartNew();
 
-                    Print(syntaxTree);
+                var parser = new Parser(line);
 
-                    Print(clock);
-                }
+                var syntaxTree = parser.Parse();
+
+                Print(syntaxTree);
+
+                Print(clock);
             }
         }
 
