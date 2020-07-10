@@ -50,5 +50,26 @@ namespace Test
                 Assert.AreEqual(expectedAnswers[i], result);
             }
         }
+
+        [TestMethod]
+        public void EvaluateParenthesisTest()
+        {
+            string[] inputs = new string[] { "(1 + 2) * 3", "3 * (7 - (1 + 4))" };
+
+            int[] expectedAnswers = new int[] { 9, 6 };
+
+            for (int i = 0; i < inputs.Length; i++)
+            {
+                var parser = new Parser(inputs[i]);
+
+                SyntaxTree tree = parser.Parse();
+
+                var evaluator = new Evaluator(tree.Root);
+
+                int result = evaluator.Evaluate();
+
+                Assert.AreEqual(expectedAnswers[i], result);
+            }
+        }
     }
 }

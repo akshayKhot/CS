@@ -6,13 +6,6 @@ namespace CC
 {
     public sealed class SyntaxTree
     {
-        public SyntaxTree(IEnumerable<string> diagnostics, ExpressionSyntax root, SyntaxToken endOfFileToken)
-        {
-            Diagnostics = diagnostics.ToArray();
-            Root = root;
-            EndOfFileToken = endOfFileToken;
-        }
-
         // Read-only, so the clients of SyntaxTree can't modify the errors
         public IReadOnlyList<string> Diagnostics { get; }
 
@@ -20,13 +13,11 @@ namespace CC
         
         public SyntaxToken EndOfFileToken { get; }
 
-        public override string ToString()
+        public SyntaxTree(IEnumerable<string> diagnostics, ExpressionSyntax root, SyntaxToken endOfFileToken)
         {
-            var builder = new StringBuilder();
-
-            BuildTree(Root, builder);
-
-            return builder.ToString();
+            Diagnostics = diagnostics.ToArray();
+            Root = root;
+            EndOfFileToken = endOfFileToken;
         }
 
         private static void BuildTree(SyntaxNode node, StringBuilder builder, string indent = "", bool isLast = true)
@@ -52,6 +43,15 @@ namespace CC
             {
                 BuildTree(child, builder, indent, child == lastChild);
             }
+        }
+
+        public override string ToString()
+        {
+            var builder = new StringBuilder();
+
+            BuildTree(Root, builder);
+
+            return builder.ToString();
         }
     }
 }
