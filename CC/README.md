@@ -29,7 +29,7 @@ For example,
         │       └──CloseParenthesisToken
         └──CloseParenthesisToken
 
-    16 (1 ms)
+    6 (1 ms)
 
 ### What will it do when it grows up?
 
