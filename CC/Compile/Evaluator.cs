@@ -31,6 +31,11 @@ namespace CC
                 return result;
             }
 
+            if (expression is ParenthesizedExpressionSyntax parenthesizedExpression)
+            {
+                return EvaluateExpression(parenthesizedExpression.Expression);
+            }
+
             throw new Exception($"Unexpected expression node: {expression.Kind}");
         }
 

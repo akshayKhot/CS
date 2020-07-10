@@ -62,4 +62,29 @@ namespace CC
             yield return Right;
         }
     }
+
+    public sealed class ParenthesizedExpressionSyntax : ExpressionSyntax
+    {
+        public override SyntaxKind Kind => SyntaxKind.ParenthsizedExpression;
+
+        public SyntaxToken LeftParenthesis { get; }
+
+        public ExpressionSyntax Expression { get; }
+        
+        public SyntaxToken RightParenthesis { get; }
+
+        public ParenthesizedExpressionSyntax(SyntaxToken leftParenthesis, ExpressionSyntax expression, SyntaxToken rightParenthesis)
+        {
+            LeftParenthesis = leftParenthesis;
+            Expression = expression;
+            RightParenthesis = rightParenthesis;
+        }
+
+        public override IEnumerable<SyntaxNode> GetChildren()
+        {
+            yield return LeftParenthesis;
+            yield return Expression;
+            yield return RightParenthesis;
+        }
+    }
 }

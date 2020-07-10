@@ -1,10 +1,8 @@
 ﻿using CC;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Collections.Generic;
 using Test.Resource;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Test
 {
@@ -23,9 +21,9 @@ namespace Test
 
                 string expectedTree = expressionTree.Value;
                 
-                SyntaxTree actualTree = parser.Parse();
-
-                Assert.AreEqual(expectedTree, actualTree.ToString());
+                string actualTree = parser.Parse().ToString();
+                
+                Assert.AreEqual(expectedTree, actualTree);
             }
         }
 

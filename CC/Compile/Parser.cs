@@ -89,25 +89,29 @@ namespace CC
             return left;
         }
 
-        // Gets the token at the offset position 
-        // from the current position. 
-        public SyntaxToken Peek(int offset)
-        {
-            int index = _position + offset;
-
-            if (index >= _tokens.Length)
-                return _tokens[_tokens.Length - 1]; // return last token
-
-            return _tokens[index];
-        }
-
         #region Private Methods
 
         private ExpressionSyntax ParsePrimaryExpression()
         {
+            if (Current.Kind == SyntaxKind.OpenParenthesisToken)
+            {
+                SyntaxToken leftParenthesis = NextToken();
+
+                ExpressionSyntax expression = ParseExpression();
+                
+                SyntaxToken rightParenthesis = Match(SyntaxKind.CloseParenthesisToken);
+
+                return new ParenthesizedExpressionSyntax(leftParenthesis, expression, rightParenthesis);
+            }
+
             SyntaxToken numberToken = Match(SyntaxKind.NumberToken);
 
             return new NumberExpressionSyntax(numberToken);
+        }
+
+        private ExpressionSyntax ParseExpression()
+        {
+            return ParseTerm();
         }
 
         private SyntaxToken Match(SyntaxKind kind)
@@ -128,7 +132,18 @@ namespace CC
             return current;
         }
 
-        
+        // Gets the token at the offset position 
+        // from the current position. 
+        public SyntaxToken Peek(int offset)
+        {
+            int index = _position + offset;
+
+            if (index >= _tokens.Length)
+                return _tokens[_tokens.Length - 1]; // return last token
+
+            return _tokens[index];
+        }
+
         #endregion
     }
 }

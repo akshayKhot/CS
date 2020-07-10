@@ -13,6 +13,7 @@ namespace CC
         BadToken,
         EndOfFileToken,
         NumberExpression,
-        BinaryExpression
+        BinaryExpression, 
+        ParenthsizedExpression
     }
 }
