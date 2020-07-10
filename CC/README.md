@@ -25,3 +25,6 @@ For example,
 ### What will it do when it grows up?
 
 Write small scripts, execute and evaluate expressions. Support functions, especially first-class functions that you can pass around. 
+
+### Object Diagram 
+![uml diagram](https://github.com/akshayKhot/CS/blob/master/CC/Meta/uml.png)
