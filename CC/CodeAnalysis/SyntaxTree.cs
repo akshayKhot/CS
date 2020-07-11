@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 
-namespace CC
+namespace CC.CodeAnalysis
 {
     public sealed class SyntaxTree
     {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace CC
+namespace CC.CodeAnalysis
 {
     public class Lexer
     {

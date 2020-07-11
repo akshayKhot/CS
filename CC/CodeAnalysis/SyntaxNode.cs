@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CC
+namespace CC.CodeAnalysis
 {
     // 1 + 2 * 3
     //
@@ -67,24 +67,24 @@ namespace CC
     {
         public override SyntaxKind Kind => SyntaxKind.ParenthsizedExpression;
 
-        public SyntaxToken LeftParenthesis { get; }
+        public SyntaxToken OpenParenthesisToken { get; }
 
         public ExpressionSyntax Expression { get; }
         
-        public SyntaxToken RightParenthesis { get; }
+        public SyntaxToken CloseParenthesisToken { get; }
 
         public ParenthesizedExpressionSyntax(SyntaxToken leftParenthesis, ExpressionSyntax expression, SyntaxToken rightParenthesis)
         {
-            LeftParenthesis = leftParenthesis;
+            OpenParenthesisToken = leftParenthesis;
             Expression = expression;
-            RightParenthesis = rightParenthesis;
+            CloseParenthesisToken = rightParenthesis;
         }
 
         public override IEnumerable<SyntaxNode> GetChildren()
         {
-            yield return LeftParenthesis;
+            yield return OpenParenthesisToken;
             yield return Expression;
-            yield return RightParenthesis;
+            yield return CloseParenthesisToken;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CC
+namespace CC.CodeAnalysis
 {
     public class Evaluator
     {

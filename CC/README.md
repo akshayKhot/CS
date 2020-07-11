@@ -1,4 +1,4 @@
-﻿# CC is a compiler written in C-Sharp. 
+﻿# CC is a Compiler written in C-Sharp. 
 
 ### What does it do right now?
 

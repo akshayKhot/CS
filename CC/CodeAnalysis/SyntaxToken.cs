@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CC
+namespace CC.CodeAnalysis
 {
     public class SyntaxToken : SyntaxNode
     {

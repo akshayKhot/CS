@@ -1,4 +1,5 @@
 using CC;
+using CC.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 

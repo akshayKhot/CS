@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Test.Resource;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using CC.CodeAnalysis;
 
 namespace Test
 {

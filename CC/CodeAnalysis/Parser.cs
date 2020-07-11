@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CC
+namespace CC.CodeAnalysis
 {
     public class Parser
     {
@@ -121,7 +121,7 @@ namespace CC
 
             _diagnostics.Add($"ERROR(Parse): Unexpected token <{Current.Kind}>, expected <{kind}>");
 
-            // why do we do this?
+            // We make our token after reporting the error, if the expected token is not present. 
             return new SyntaxToken(kind, Current.Position, null, null);
         }
 
